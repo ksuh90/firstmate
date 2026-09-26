@@ -1,0 +1,4 @@
+# New regression tests run against the PRE-FIX observer (72b63ee):
+not ok - one transient forge failure printed an unavailable line: contributions: observation unavailable for https://github.com/o/r/pull/8
+not ok - a sustained failure did not spend exactly two attempts: 1
+not ok - a failing cycle spent 1 attempts, not 2

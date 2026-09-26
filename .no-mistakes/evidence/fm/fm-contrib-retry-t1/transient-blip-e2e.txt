@@ -1,0 +1,31 @@
+
+===== BEFORE the fix: one transient blip =====
+forge behaviour  : HTTP 502 on the first read of repos/o/r/pulls/8/reviews, then healthy
+observer script  : pre-fix (72b63ee)
+--- $ fm-contributions.sh poll   (stdout is what wakes the first mate) ---
+contributions: observation unavailable for https://github.com/o/r/pull/8
+--- poll exit status: 0 ---
+reviews reads attempted : 1
+durable record          : checked_at=2026-09-16T08:00:00Z error="forge observation unavailable or changed during read"
+wake queue              : (empty)
+
+===== AFTER the fix: one transient blip =====
+forge behaviour  : HTTP 502 on the first read of repos/o/r/pulls/8/reviews, then healthy
+observer script  : fixed (HEAD)
+--- $ fm-contributions.sh poll   (stdout is what wakes the first mate) ---
+(no output - nothing woke the first mate)
+--- poll exit status: 0 ---
+reviews reads attempted : 2
+durable record          : checked_at=2026-09-16T08:00:00Z error=null
+wake queue              : (empty)
+
+===== AFTER the fix: a genuinely unavailable forge =====
+forge behaviour  : HTTP 502 on every read of repos/o/r/pulls/8/reviews
+observer script  : fixed (HEAD)
+--- $ fm-contributions.sh poll   (stdout is what wakes the first mate) ---
+contributions: observation unavailable for https://github.com/o/r/pull/8
+--- poll exit status: 0 ---
+reviews reads attempted : 2
+durable record          : checked_at=2026-09-16T08:00:00Z error="forge observation unavailable or changed during read"
+wake queue              : (empty)
+
