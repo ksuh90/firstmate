@@ -1,0 +1,4 @@
+not ok - one transient forge failure printed an unavailable line: contributions: observation unavailable for https://github.com/o/r/pull/8
+not ok - a sustained failure did not spend exactly two attempts: 1
+not ok - the failed read was not retried exactly once
+not ok - 3 contribution regressions
